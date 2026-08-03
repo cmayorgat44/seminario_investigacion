@@ -30,7 +30,6 @@ class NumberedCanvas(canvas.Canvas):
     def draw_page_decorations(self, page_count):
         self.saveState()
         
-        # Don't draw headers/footers on page 1 (cover-like header)
         if self._pageNumber > 1:
             # Running Header
             self.setFont("Helvetica-Bold", 8)
@@ -71,45 +70,43 @@ def create_proposal_pdf(output_path):
     
     styles = getSampleStyleSheet()
     
-    # Palette
     PRIMARY = colors.HexColor("#D35400")   # Anahuac Orange Accent
     SECONDARY = colors.HexColor("#2C3E50") # Deep Slate Navy
     TEXT_DARK = colors.HexColor("#2B2B2B") # Off-black body
     BG_LIGHT = colors.HexColor("#F8F9F9")  # Soft background
     BORDER_COLOR = colors.HexColor("#E5E7E9")
     
-    # Custom Typography Styles
     title_style = ParagraphStyle(
         'DocTitle',
         parent=styles['Normal'],
         fontName='Helvetica-Bold',
-        fontSize=20,
-        leading=24,
+        fontSize=18,
+        leading=22,
         textColor=SECONDARY,
         alignment=TA_CENTER,
-        spaceAfter=10
+        spaceAfter=8
     )
     
     subtitle_style = ParagraphStyle(
         'DocSubtitle',
         parent=styles['Normal'],
         fontName='Helvetica-Bold',
-        fontSize=12,
-        leading=16,
+        fontSize=11,
+        leading=15,
         textColor=PRIMARY,
         alignment=TA_CENTER,
-        spaceAfter=15
+        spaceAfter=12
     )
     
     h1_style = ParagraphStyle(
         'Heading1_Custom',
         parent=styles['Heading1'],
         fontName='Helvetica-Bold',
-        fontSize=13,
-        leading=17,
+        fontSize=12,
+        leading=16,
         textColor=SECONDARY,
-        spaceBefore=14,
-        spaceAfter=6,
+        spaceBefore=12,
+        spaceAfter=5,
         keepWithNext=True
     )
     
@@ -117,11 +114,11 @@ def create_proposal_pdf(output_path):
         'Heading2_Custom',
         parent=styles['Heading2'],
         fontName='Helvetica-Bold',
-        fontSize=10.5,
-        leading=14,
+        fontSize=10,
+        leading=13,
         textColor=PRIMARY,
-        spaceBefore=10,
-        spaceAfter=4,
+        spaceBefore=8,
+        spaceAfter=3,
         keepWithNext=True
     )
     
@@ -129,47 +126,47 @@ def create_proposal_pdf(output_path):
         'Body_Custom',
         parent=styles['BodyText'],
         fontName='Helvetica',
-        fontSize=9.5,
-        leading=13.5,
+        fontSize=9,
+        leading=13,
         textColor=TEXT_DARK,
         alignment=TA_JUSTIFY,
-        spaceAfter=6
+        spaceAfter=5
     )
     
     bullet_style = ParagraphStyle(
         'Bullet_Custom',
         parent=body_style,
-        leftIndent=15,
-        bulletIndent=5,
-        spaceAfter=4
+        leftIndent=12,
+        bulletIndent=4,
+        spaceAfter=3
     )
     
     math_style = ParagraphStyle(
         'Math_Custom',
         parent=styles['Normal'],
         fontName='Courier-Oblique',
-        fontSize=9,
-        leading=13,
+        fontSize=8.5,
+        leading=12,
         textColor=colors.HexColor("#1A5276"),
         alignment=TA_CENTER,
-        spaceBefore=6,
-        spaceAfter=6
+        spaceBefore=5,
+        spaceAfter=5
     )
     
-    meta_label = ParagraphStyle('MetaLabel', fontName='Helvetica-Bold', fontSize=9.5, leading=13, textColor=SECONDARY)
-    meta_val = ParagraphStyle('MetaVal', fontName='Helvetica', fontSize=9.5, leading=13, textColor=TEXT_DARK)
+    meta_label = ParagraphStyle('MetaLabel', fontName='Helvetica-Bold', fontSize=9, leading=12, textColor=SECONDARY)
+    meta_val = ParagraphStyle('MetaVal', fontName='Helvetica', fontSize=9, leading=12, textColor=TEXT_DARK)
     
     story = []
     
-    # --- HEADER BLOCK (UNIVERSIDAD ANÁHUAC) ---
-    story.append(Paragraph("UNIVERSIDAD ANÁHUAC MÉXICO", ParagraphStyle('UniHeader', fontName='Helvetica-Bold', fontSize=14, leading=17, textColor=PRIMARY, alignment=TA_CENTER)))
-    story.append(Paragraph("Facultad de Ciencias Actuariales &nbsp;|&nbsp; Posgrado en Estadística", ParagraphStyle('SubHeader', fontName='Helvetica', fontSize=10, leading=13, textColor=SECONDARY, alignment=TA_CENTER)))
-    story.append(Paragraph("Maestría en Estadística — Seminario de Investigación", ParagraphStyle('ProgHeader', fontName='Helvetica-Oblique', fontSize=9.5, leading=12, textColor=colors.HexColor("#5D6D7E"), alignment=TA_CENTER)))
-    story.append(Spacer(1, 10))
-    story.append(HRFlowable(width="100%", thickness=1.5, color=PRIMARY, spaceBefore=0, spaceAfter=15))
+    # --- HEADER BLOCK ---
+    story.append(Paragraph("UNIVERSIDAD ANÁHUAC MÉXICO", ParagraphStyle('UniHeader', fontName='Helvetica-Bold', fontSize=13, leading=16, textColor=PRIMARY, alignment=TA_CENTER)))
+    story.append(Paragraph("Facultad de Ciencias Actuariales &nbsp;|&nbsp; Posgrado en Estadística", ParagraphStyle('SubHeader', fontName='Helvetica', fontSize=9.5, leading=12, textColor=SECONDARY, alignment=TA_CENTER)))
+    story.append(Paragraph("Maestría en Estadística — Protocolo Actualizado de Tesis", ParagraphStyle('ProgHeader', fontName='Helvetica-Oblique', fontSize=9, leading=11, textColor=colors.HexColor("#5D6D7E"), alignment=TA_CENTER)))
+    story.append(Spacer(1, 8))
+    story.append(HRFlowable(width="100%", thickness=1.5, color=PRIMARY, spaceBefore=0, spaceAfter=12))
     
     # --- TITLE ---
-    story.append(Paragraph("PROPUESTA DE PROTOCOLO DE TESIS", title_style))
+    story.append(Paragraph("PROPUESTA DE PROTOCOLO DE TESIS DE MAESTRÍA", title_style))
     story.append(Paragraph("Modelación de Factores Dinámicos y Cointegración (FAVAR-VECM) para el Pronóstico de la Presión Inmobiliaria y el Desplazamiento Demográfico en la ZMVM", subtitle_style))
     
     # --- METADATA BOX ---
@@ -177,242 +174,81 @@ def create_proposal_pdf(output_path):
         [Paragraph("<b>Alumno:</b>", meta_label), Paragraph("Carlos Guillermo Mayorga Tapia", meta_val),
          Paragraph("<b>Asesor Propuesto:</b>", meta_label), Paragraph("Dr. José Eluid Silva Urrutia", meta_val)],
         [Paragraph("<b>Programa:</b>", meta_label), Paragraph("Maestría en Estadística", meta_val),
-         Paragraph("<b>Fecha:</b>", meta_label), Paragraph("Agosto de 2026", meta_val)],
-        [Paragraph("<b>Área:</b>", meta_label), Paragraph("Series de Tiempo &amp; Demografía Cuantitativa", meta_val),
-         Paragraph("<b>Cobertura:</b>", meta_label), Paragraph("Zona Metropolitana del Valle de México (ZMVM)", meta_val)]
+         Paragraph("<b>Fecha Actualización:</b>", meta_label), Paragraph("Agosto de 2026 (Versión 2.0)", meta_val)],
+        [Paragraph("<b>Arquitectura BD:</b>", meta_label), Paragraph("DuckDB Relacional / 3NF / Esquema Estrella", meta_val),
+         Paragraph("<b>Validación QA:</b>", meta_label), Paragraph("Detección MAD, Pruebas ADF y KPSS", meta_val)]
     ]
     meta_table = Table(meta_data, colWidths=[1.1*inch, 2.4*inch, 1.3*inch, 2.2*inch])
     meta_table.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,-1), BG_LIGHT),
         ('BOX', (0,0), (-1,-1), 1, BORDER_COLOR),
         ('INNERGRID', (0,0), (-1,-1), 0.5, BORDER_COLOR),
-        ('TOPPADDING', (0,0), (-1,-1), 5),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 5),
+        ('TOPPADDING', (0,0), (-1,-1), 4),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 4),
         ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
     ]))
     story.append(meta_table)
+    story.append(Spacer(1, 12))
+    
+    # SECCIONES
+    story.append(Paragraph("1. INTRODUCCIÓN Y CONTEXTO METROPOLITANO", h1_style))
+    story.append(Paragraph(
+        "La Zona Metropolitana del Valle de México (ZMVM), con más de 21 millones de habitantes, vive una intensa reestructuración urbana. Sectores centrales experimentan una marcada gentrificación comercial y expansión del alquiler vacacional de corta estancia. Frente al esquema determinista decenal del CONAPO, esta tesis propone un marco probabilístico de **Series de Tiempo de Alta Dimensión** (FAVAR-VECM).",
+        body_style
+    ))
+    
+    story.append(Paragraph("2. HALLAZGOS EMPÍRICOS PRELIMINARES Y VIABILIDAD DE DATOS", h1_style))
+    story.append(Paragraph(
+        "Como parte del avance técnico, se realizó la descarga e inspección del dataset completo de <b>Inside Airbnb CDMX</b> (31,430 propiedades activas), confirmando patrones empíricos de sustitución de vivienda habitacional:",
+        body_style
+    ))
+    
+    ab_data = [
+        [Paragraph("<b>Alcaldía</b>", ParagraphStyle('TH1', fontName='Helvetica-Bold', fontSize=8.5, textColor=SECONDARY)),
+         Paragraph("<b>Propiedades Activas</b>", ParagraphStyle('TH2', fontName='Helvetica-Bold', fontSize=8.5, textColor=SECONDARY)),
+         Paragraph("<b>% del Total CDMX</b>", ParagraphStyle('TH3', fontName='Helvetica-Bold', fontSize=8.5, textColor=SECONDARY)),
+         Paragraph("<b>Precio Mediano/Noche (MXN)</b>", ParagraphStyle('TH4', fontName='Helvetica-Bold', fontSize=8.5, textColor=SECONDARY))],
+        [Paragraph("Cuauhtémoc", body_style), Paragraph("14,449", body_style), Paragraph("45.97%", body_style), Paragraph("$1,979.00", body_style)],
+        [Paragraph("Miguel Hidalgo", body_style), Paragraph("4,870", body_style), Paragraph("15.49%", body_style), Paragraph("$2,211.50", body_style)],
+        [Paragraph("Benito Juárez", body_style), Paragraph("3,623", body_style), Paragraph("11.53%", body_style), Paragraph("$1,398.00", body_style)],
+        [Paragraph("Coyoacán", body_style), Paragraph("2,458", body_style), Paragraph("7.82%", body_style), Paragraph("$1,598.00", body_style)],
+    ]
+    ab_table = Table(ab_data, colWidths=[1.8*inch, 1.7*inch, 1.5*inch, 2.0*inch])
+    ab_table.setStyle(TableStyle([
+        ('BACKGROUND', (0,0), (-1,0), BG_LIGHT),
+        ('BOX', (0,0), (-1,-1), 1, BORDER_COLOR),
+        ('INNERGRID', (0,0), (-1,-1), 0.5, BORDER_COLOR),
+        ('TOPPADDING', (0,0), (-1,-1), 4),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 4),
+    ]))
+    story.append(ab_table)
+    story.append(Spacer(1, 6))
+    story.append(Paragraph("<i>Nota: El 66.82% (21,000 unidades) corresponde a viviendas/departamentos completos extraídos del mercado residencial permanente.</i>", ParagraphStyle('Note', fontName='Helvetica-Oblique', fontSize=8, textColor=colors.HexColor("#5D6D7E"))))
+    
+    story.append(Paragraph("3. ARQUITECTURA DE DATOS Y PRUEBAS DE ROBUSTEZ (QA)", h1_style))
+    story.append(Paragraph(
+        "Se implementó una base de datos relacional analítica local en <b>DuckDB (3NF / Esquema Estrella)</b> (<code>processed_data/tesis_zmvm.duckdb</code>) articulada mediante <code>dim_alcaldia</code>, <code>dim_tiempo</code> (80 trimestres 2005Q1-2024Q4) y tablas de hechos. Asimismo, se integró el módulo <code>src/data_quality/validator.py</code> para ejecutar validación de continuidad temporal, detección robusta de outliers vía MAD y pruebas cruzadas de integrabilidad estocástica ADF y KPSS.",
+        body_style
+    ))
+    
+    story.append(Paragraph("4. FORMULACIÓN MATEMÁTICA Y MODELO FAVAR-VECM", h1_style))
+    story.append(Paragraph("X_t = &Lambda; F_t + e_t &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp; &Delta;W_t = &Pi; W_{t-1} + &sum;_{i=1}^{p-1} &Gamma;_i &Delta;W_{t-i} + &epsilon;_t", math_style))
+    story.append(Paragraph(
+        "donde &Hat;F<sub>t</sub> representa los factores latentes de presión inmobiliaria y comercial extraídos vía DFM, y &Pi; = &alpha;&beta;' captura los vectores de cointegración entre precios, alquileres de corta estancia y movilidad laboral de la ENOE.",
+        body_style
+    ))
+    
+    story.append(Paragraph("5. CRONOGRAMA DE TRABAJO (12 MESES)", h1_style))
+    story.append(Paragraph("Fase I (Meses 1-2): Armonización de series. | Fase II (Meses 3-4): DFM e Integrabilidad. | Fase III (Meses 5-6): Cointegración Johansen y FAVAR. | Fase IV (Meses 7-8): IRF y FEVD. | Fase V (Meses 9-10): Backtesting fuera de muestra. | Fase VI (Meses 11-12): Redacción y Defensa.", body_style))
+    
     story.append(Spacer(1, 15))
-    
-    # --- SECTIONS ---
-    
-    # 1. INTRODUCCIÓN Y CONTEXTO
-    story.append(Paragraph("1. INTRODUCCIÓN Y CONTEXTO", h1_style))
-    story.append(Paragraph(
-        "La Zona Metropolitana del Valle de México (ZMVM), con una población superior a los 21 millones de habitantes, atraviesa una profunda reestructuración sociodemográfica. En las últimas dos décadas, sectores centrales y peri-centrales de la metrópoli han experimentado acelerados procesos de apreciación del suelo, gentrificación comercial y una fuerte expansión del alquiler vacacional de corta estancia mediado por plataformas digitales (ej. Airbnb).",
-        body_style
-    ))
-    story.append(Paragraph(
-        "A nivel de planificación nacional, las proyecciones demográficas han dependido tradicionalmente del Método de Componentes Demográficos (MCD) del Consejo Nacional de Población (CONAPO). Sin embargo, el MCD opera bajo un marco determinista en horizontes decenales a escala nacional o estatal. Este enfoque resulta insuficiente para capturar choques socioeconómicos urbanos de alta frecuencia (trimestrales o anuales) y su consecuente impacto en la movilidad y el desplazamiento secundario de la fuerza laboral hacia las periferias urbanas.",
-        body_style
-    ))
-    story.append(Paragraph(
-        "Esta propuesta aborda el desplazamiento poblacional desde un marco riguroso de <b>Series de Tiempo de Alta Dimensión</b>. Se plantea integrar indicadores económicos e inmobiliarios de alta frecuencia con microdatos de empleo y movilidad migratoria para probar hipótesis estocásticas de cointegración y pronosticar la dinámica expulsiva y de reacomodo en la ZMVM.",
-        body_style
-    ))
-    
-    # 2. PLANTEAMIENTO DEL PROBLEMA Y JUSTIFICACIÓN
-    story.append(Paragraph("2. PLANTEAMIENTO DEL PROBLEMA Y JUSTIFICACIÓN", h1_style))
-    story.append(Paragraph(
-        "Existe una brecha metodológica sustancial en la literatura nacional: los censos de población (decenales) no ofrecen la resolución temporal requerida para guiar políticas públicas continuas, mientras que los índices inmobiliarios de alta frecuencia raramente se conectan estadísticamente con los flujos de fuerza laboral.",
-        body_style
-    ))
-    story.append(Paragraph(
-        "El desafío estadístico central reside en la dimensionalidad (<i>p &gt;&gt; n</i>) y en la naturaleza estocástica no estacionaria de las series. Al integrar decenas de categorías comerciales (DENUE-INEGI), métricas de plataformas de alojamiento e índices de precios habitacionales (SHF) junto con variables de la Encuesta Nacional de Ocupación y Empleo (ENOE), se obtiene un entorno de alta dimensión donde los modelos VAR tradicionales sufren de sobreajuste y agotamiento de grados de libertad.",
-        body_style
-    ))
-    story.append(Paragraph(
-        "Para resolver esta limitación, la investigación adopta un modelo de <b>Factores Dinámicos Aumentados en Vectores Autorregresivos con Corrección de Error (FAVAR-VECM)</b>. Este enfoque reduce el entorno 'rico en datos' (<i>data-rich environment</i>) a un conjunto parsimonioso de factores latentes, preservando las relaciones de equilibrio a largo plazo y la dinámica de corto plazo.",
-        body_style
-    ))
-    
-    # 3. OBJETIVOS
-    story.append(Paragraph("3. OBJETIVOS DE INVESTIGACIÓN", h1_style))
-    story.append(Paragraph("<b>Objetivo General:</b>", h2_style))
-    story.append(Paragraph(
-        "Desarrollar, estimar y evaluar un marco estocástico de series de tiempo basado en <b>Modelos de Factores Dinámicos y Vectores de Corrección de Error (FAVAR-VECM)</b> para analizar, probar vectores de cointegración y pronosticar el impacto de la presión inmobiliaria y la gentrificación comercial sobre el desplazamiento demográfico en la ZMVM a un horizonte de 12 a 20 trimestres.",
-        body_style
-    ))
-    story.append(Paragraph("<b>Objetivos Específicos:</b>", h2_style))
-    story.append(Paragraph("• <b>Extracción de Factores Latentes:</b> Construir un Modelo de Factores Dinámicos (DFM) que reduzca la dimensionalidad del DENUE, Índice SHF e Inside Airbnb en factores de <i>Presión Inmobiliaria</i> y <i>Gentrificación Comercial</i>.", bullet_style))
-    story.append(Paragraph("• <b>Evaluación de Integrabilidad:</b> Verificar la estacionariedad y orden de integración <i>I(d)</i> de las series mediante pruebas ADF, Phillips-Perron y KPSS.", bullet_style))
-    story.append(Paragraph("• <b>Prueba y Modelación de Cointegración:</b> Evaluar la existencia de vectores de cointegración (Johansen rank test) entre los factores latentes urbanos y los saldos de movilidad laboral de la ENOE.", bullet_style))
-    story.append(Paragraph("• <b>Análisis Dinámico de Inferencia:</b> Estimar Funciones de Impulso-Respuesta (IRF) y Descomposición de Varianza de Error de Pronóstico (FEVD) para cuantificar la velocidad de transmisión de los choques inmobiliarios.", bullet_style))
-    story.append(Paragraph("• <b>Validación Fuera de Muestra:</b> Evaluar la precisión predictiva del FAVAR-VECM contra modelos benchmark univariados (ARIMA) y VAR mediante ventanas móviles (<i>rolling windows</i>) y métricas RMSE/MAE.", bullet_style))
-    
-    # 4. MARCO TEÓRICO Y LITERATURA ACADÉMICA
-    story.append(Paragraph("4. MARCO TEÓRICO Y REVISIÓN DE LA LITERATURA", h1_style))
-    story.append(Paragraph(
-        "La investigación se fundamenta en tres vertientes principales de la literatura econométrica y demográfica internacional y nacional:",
-        body_style
-    ))
-    
-    lit_data = [
-        [Paragraph("<b>Vertiente Literaria</b>", ParagraphStyle('TH1', fontName='Helvetica-Bold', fontSize=9, textColor=SECONDARY)),
-         Paragraph("<b>Autores Clave &amp; Referencias</b>", ParagraphStyle('TH2', fontName='Helvetica-Bold', fontSize=9, textColor=SECONDARY)),
-         Paragraph("<b>Aporte Metodológico</b>", ParagraphStyle('TH3', fontName='Helvetica-Bold', fontSize=9, textColor=SECONDARY))],
-        
-        [Paragraph("Series Ricas en Datos &amp; FAVAR", body_style),
-         Paragraph("Stock &amp; Watson (2002, 2016)<br/>Bernanke, Boivin &amp; Eliasz (2005)", body_style),
-         Paragraph("Extracción de factores latentes dinámicos vía componentes principales en entornos <i>p &gt;&gt; n</i> sin agotar grados de libertad.", body_style)],
-        
-        [Paragraph("Econometría Urbana &amp; Vivienda", body_style),
-         Paragraph("Saiz, A. (2007)<br/>Engsted &amp; Bentzen (1997)<br/>Guerrieri et al. (2013)", body_style),
-         Paragraph("Cointegración entre shocks de oferta/demanda habitacional, incrementos de renta y dinámicas de gentrificación endógena.", body_style)],
-        
-        [Paragraph("Alojamiento Temporal &amp; Renta", body_style),
-         Paragraph("Barron, Kung &amp; Proserpio (2021)", body_style),
-         Paragraph("Inferencia causal del impacto de plataformas (Airbnb) sobre la conversión de vivienda residencial y expulsión de inquilinos.", body_style)],
-        
-        [Paragraph("Demografía Matemática en México", body_style),
-         Paragraph("CONAPO (2020-2070)<br/>Hyndman &amp; Ullah (2007)", body_style),
-         Paragraph("Transición del enfoque determinista de componentes hacia métodos estocásticos y de datos funcionales en demografía.", body_style)]
-    ]
-    lit_table = Table(lit_data, colWidths=[1.8*inch, 2.2*inch, 3.0*inch])
-    lit_table.setStyle(TableStyle([
-        ('BACKGROUND', (0,0), (-1,0), BG_LIGHT),
-        ('BOX', (0,0), (-1,-1), 1, BORDER_COLOR),
-        ('INNERGRID', (0,0), (-1,-1), 0.5, BORDER_COLOR),
-        ('TOPPADDING', (0,0), (-1,-1), 5),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 5),
-        ('VALIGN', (0,0), (-1,-1), 'TOP'),
-    ]))
-    story.append(lit_table)
-    story.append(Spacer(1, 10))
-    
-    # 5. FUENTES DE DATOS ABIERTOS
-    story.append(Paragraph("5. FUENTES DE DATOS ABIERTOS Y FRECUENCIA TEMPORAL", h1_style))
-    story.append(Paragraph(
-        "Se utilizarán exclusivamente fuentes públicas abiertas del Estado mexicano e instituciones internacionales:",
-        body_style
-    ))
-    
-    ds_data = [
-        [Paragraph("<b>Fuente</b>", ParagraphStyle('TH1', fontName='Helvetica-Bold', fontSize=9, textColor=SECONDARY)),
-         Paragraph("<b>Frecuencia</b>", ParagraphStyle('TH2', fontName='Helvetica-Bold', fontSize=9, textColor=SECONDARY)),
-         Paragraph("<b>Periodo</b>", ParagraphStyle('TH3', fontName='Helvetica-Bold', fontSize=9, textColor=SECONDARY)),
-         Paragraph("<b>Variables de Interés</b>", ParagraphStyle('TH4', fontName='Helvetica-Bold', fontSize=9, textColor=SECONDARY))],
-        
-        [Paragraph("<b>Índice SHF</b> (Sociedad Hipotecaria Federal)", body_style), Paragraph("Trimestral", body_style), Paragraph("2005 – 2024<br/>(80 obs.)", body_style), Paragraph("Índice de precios de vivienda ajustado por inflación en ZMVM y por alcaldía.", body_style)],
-        [Paragraph("<b>INEGI – ENOE</b> (Encuesta Ocupación y Empleo)", body_style), Paragraph("Trimestral", body_style), Paragraph("2005 – 2024", body_style), Paragraph("Microdatos de cambio de residencia, salarios, informalidad y saldo migratorio laboral.", body_style)],
-        [Paragraph("<b>INEGI – DENUE</b> (Directorio Unidades Econ.)", body_style), Paragraph("Semestral / Anual", body_style), Paragraph("2010 – 2024", body_style), Paragraph("Conteo y densidad de establecimientos comerciales de sustitución gentrificadora.", body_style)],
-        [Paragraph("<b>Inside Airbnb / CDMX Datos Abiertos</b>", body_style), Paragraph("Mensual / Trimestral", body_style), Paragraph("2015 – 2024", body_style), Paragraph("Listados activos, tarifa media diaria (ADR) y tasa de ocupación estimada.", body_style)]
-    ]
-    ds_table = Table(ds_data, colWidths=[1.8*inch, 1.0*inch, 1.2*inch, 3.0*inch])
-    ds_table.setStyle(TableStyle([
-        ('BACKGROUND', (0,0), (-1,0), BG_LIGHT),
-        ('BOX', (0,0), (-1,-1), 1, BORDER_COLOR),
-        ('INNERGRID', (0,0), (-1,-1), 0.5, BORDER_COLOR),
-        ('TOPPADDING', (0,0), (-1,-1), 5),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 5),
-        ('VALIGN', (0,0), (-1,-1), 'TOP'),
-    ]))
-    story.append(ds_table)
-    story.append(Spacer(1, 10))
-    
-    # 6. FORMULACIÓN MATEMÁTICA
-    story.append(Paragraph("6. FORMULACIÓN MATEMÁTICA DEL MODELO FAVAR-VECM", h1_style))
-    story.append(Paragraph(
-        "Sea <i>X<sub>t</sub></i> un vector <i>N &times; 1</i> de series de tiempo socioeconómicas observadas en el trimestre <i>t = 1, ..., T</i>, donde <i>N</i> representa la dimensión expandida de indicadores urbanos.",
-        body_style
-    ))
-    story.append(Paragraph("<b>Paso 1: Modelo de Factores Dinámicos (DFM)</b>", h2_style))
-    story.append(Paragraph(
-        "El vector observacional <i>X<sub>t</sub></i> se descompone en <i>K &lt;&lt; N</i> factores latentes <i>F<sub>t</sub></i> y un componente idiosincrásico <i>e<sub>t</sub></i>:",
-        body_style
-    ))
-    story.append(Paragraph("X_t = &Lambda; F_t + e_t , &nbsp;&nbsp;&nbsp;&nbsp; e_t ~ N(0, &Omega;)", math_style))
-    story.append(Paragraph(
-        "donde &Lambda; es la matriz de cargas factoriales (<i>N &times; K</i>). Los factores &Hat;F<sub>t</sub> son estimados vía Componentes Principales Dinámicos o Filtro de Kalman en Espacio de Estados.",
-        body_style
-    ))
-    story.append(Paragraph("<b>Paso 2: Sistema FAVAR-VECM Cointegrado</b>", h2_style))
-    story.append(Paragraph(
-        "Definimos el vector observado de variables sociodemográficas clave <i>Y<sub>t</sub></i> (ej. Saldo migratorio e ingreso laboral de la ENOE). Construimos el vector aumentado <i>W<sub>t</sub> = [&Hat;F<sub>t</sub>', Y<sub>t</sub>']'</i>.",
-        body_style
-    ))
-    story.append(Paragraph(
-        "Si las componentes de <i>W<sub>t</sub></i> son <i>I(1)</i> y existe una relación de cointegración con rango <i>r &gt; 0</i>, el modelo adopta la representación VECM:",
-        body_style
-    ))
-    story.append(Paragraph("&Delta;W_t = &Pi; W_{t-1} + &sum;_{i=1}^{p-1} &Gamma;_i &Delta;W_{t-i} + &epsilon;_t , &nbsp;&nbsp;&nbsp;&nbsp; &epsilon;_t ~ WN(0, &Sigma;)", math_style))
-    story.append(Paragraph(
-        "donde <b>&Pi; = &alpha;&beta;'</b> es la matriz de rango <i>r</i> (con &beta; conteniendo los vectores de cointegración de largo plazo y &alpha; las velocidades de ajuste) y &Gamma;<sub>i</sub> gobierna la dinámica de corto plazo.",
-        body_style
-    ))
-    
-    # 7. DISCUSIÓN DE DUDAS METODOLÓGICAS
-    story.append(Paragraph("7. DUDAS Y RETOS METODOLÓGICOS PROPUESTOS PARA DISCUSIÓN", h1_style))
-    story.append(Paragraph(
-        "A fin de enriquecer la discusión en el Seminario de Investigación, se sintetizan cuatro cuestiones metodológicas centrales a tratar con el Dr. Silva Urrutia:",
-        body_style
-    ))
-    story.append(Paragraph("1. <b>Alineación de Frecuencias Dispares (Temporal Aggregation &amp; State-Space):</b>", h2_style))
-    story.append(Paragraph(
-        "<i>Desafío:</i> SHF y ENOE son trimestrales, DENUE es semestral/anual y Airbnb es mensual.<br/>"
-        "<i>Estrategia de Mitigación:</i> Formular un modelo de Espacio de Estados acoplado al Filtro de Kalman para imputar y agregar temporalmente las series de menor frecuencia a una malla trimestral sin distorsionar la estructura autorregresiva.",
-        body_style
-    ))
-    story.append(Paragraph("2. <b>Estimación del Rango de Cointegración en Entornos de Alta Dimensión:</b>", h2_style))
-    story.append(Paragraph(
-        "<i>Desafío:</i> La prueba de Johansen puede perder potencia si los factores latentes estimados contienen error muestral de primera etapa.<br/>"
-        "<i>Estrategia de Mitigación:</i> Aplicar la prueba de cointegración en dos pasos de Engle-Granger para modelos de factores o implementar regularización Lasso en la matriz de corrección de error (Lasso-VECM).",
-        body_style
-    ))
-    story.append(Paragraph("3. <b>Identificación Estructural de los Choques en el FAVAR:</b>", h2_style))
-    story.append(Paragraph(
-        "<i>Desafío:</i> La descomposición de Cholesky tradicional exige imponer un ordenamiento estricto recursivo entre gentrificación y desplazamiento demográfico.<br/>"
-        "<i>Estrategia de Mitigación:</i> Evaluar la implementación de restricciones de signo (<i>sign restrictions</i>) en la matriz estructural <b>B</b><sub>0</sub> basadas en teoría económica urbana.",
-        body_style
-    ))
-    story.append(Paragraph("4. <b>Linealidad vs. Regímenes de Umbral (TVAR):</b>", h2_style))
-    story.append(Paragraph(
-        "<i>Desafío:</i> El desplazamiento poblacional podría responder de forma no lineal ante choques inmobiliarios extremos.<br/>"
-        "<i>Estrategia de Mitigación:</i> Aplicar la prueba de linealidad de Hansen; de ser rechazada, extender hacia un Modelo Vectorial Autorregresivo de Umbral (TVAR).",
-        body_style
-    ))
-    
-    # 8. DUDAS SOBRE LAS FUENTES DE DATOS
-    story.append(Paragraph("8. DUDAS Y RETOS SOBRE LAS FUENTES DE DATOS", h1_style))
-    story.append(Paragraph("• <b>Heterogeneidad Espacial del DENUE:</b> El DENUE captura establecimientos formales, pero presenta rezagos en altas/bajas de micro-negocios. <i>Mitigación:</i> Construir un índice relativo por código SCIAN centrado en comercios gentrificadores.", bullet_style))
-    story.append(Paragraph("• <b>Cobertra Periférica de Airbnb:</b> Alta penetración en alcaldías centrales (Cuauhtémoc, Miguel Hidalgo), pero menor en municipios conurbados del Edomex. <i>Mitigación:</i> Introducir una matriz de contigüidad espacial <i>W</i> para capturar efectos de desbordamiento (<i>spatial spillovers</i>).", bullet_style))
-    story.append(Paragraph("• <b>Discontinuidad por COVID-19 en ENOE (2020Q2):</b> La sustitución temporal por la ETOE creó una brecha muestral. <i>Mitigación:</i> Incluir dummies de intervención o suavizado mediante espacio de estados en 2020.", bullet_style))
-    
-    # 9. CRONOGRAMA
-    story.append(Paragraph("9. CRONOGRAMA PROPUESTO DE TRABAJO (12 MESES)", h1_style))
-    
-    cron_data = [
-        [Paragraph("<b>Fase</b>", ParagraphStyle('TH1', fontName='Helvetica-Bold', fontSize=9, textColor=SECONDARY)),
-         Paragraph("<b>Periodo</b>", ParagraphStyle('TH2', fontName='Helvetica-Bold', fontSize=9, textColor=SECONDARY)),
-         Paragraph("<b>Entregable &amp; Actividades Clave</b>", ParagraphStyle('TH3', fontName='Helvetica-Bold', fontSize=9, textColor=SECONDARY))],
-        
-        [Paragraph("Fase I", body_style), Paragraph("Meses 1 – 2", body_style), Paragraph("Extracción, limpieza y armonización de series SHF, ENOE, DENUE y Airbnb a malla trimestral.", body_style)],
-        [Paragraph("Fase II", body_style), Paragraph("Meses 3 – 4", body_style), Paragraph("Pruebas de integrabilidad (ADF, KPSS) y estimación del Modelo de Factores Dinámicos (DFM).", body_style)],
-        [Paragraph("Fase III", body_style), Paragraph("Meses 5 – 6", body_style), Paragraph("Pruebas de Cointegración de Johansen y especificación del sistema FAVAR-VECM.", body_style)],
-        [Paragraph("Fase IV", body_style), Paragraph("Meses 7 – 8", body_style), Paragraph("Estimación de IRF, Descomposición de Varianza (FEVD) y pruebas de causalidad de Granger.", body_style)],
-        [Paragraph("Fase V", body_style), Paragraph("Meses 9 – 10", body_style), Paragraph("Validación fuera de muestra (Backtesting 2021-2024) y evaluación contra modelos benchmark.", body_style)],
-        [Paragraph("Fase VI", body_style), Paragraph("Meses 11 – 12", body_style), Paragraph("Redacción final del documento de tesis, artículo científico derivado y preparación de la defensa.", body_style)]
-    ]
-    cron_table = Table(cron_data, colWidths=[1.0*inch, 1.3*inch, 4.7*inch])
-    cron_table.setStyle(TableStyle([
-        ('BACKGROUND', (0,0), (-1,0), BG_LIGHT),
-        ('BOX', (0,0), (-1,-1), 1, BORDER_COLOR),
-        ('INNERGRID', (0,0), (-1,-1), 0.5, BORDER_COLOR),
-        ('TOPPADDING', (0,0), (-1,-1), 5),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 5),
-        ('VALIGN', (0,0), (-1,-1), 'TOP'),
-    ]))
-    story.append(cron_table)
-    story.append(Spacer(1, 20))
-    
-    # SIGNATURE BLOCK
     sig_data = [
-        [Paragraph("____________________________________________<br/><b>Carlos Guillermo Mayorga Tapia</b><br/>Alumno — Maestría en Estadística", ParagraphStyle('Sig1', fontName='Helvetica', fontSize=9, alignment=TA_CENTER)),
-         Paragraph("____________________________________________<br/><b>Dr. José Eluid Silva Urrutia</b><br/>Asesor / Director de Tesis", ParagraphStyle('Sig2', fontName='Helvetica', fontSize=9, alignment=TA_CENTER))]
+        [Paragraph("____________________________________________<br/><b>Carlos Guillermo Mayorga Tapia</b><br/>Alumno — Maestría en Estadística", ParagraphStyle('Sig1', fontName='Helvetica', fontSize=8.5, alignment=TA_CENTER)),
+         Paragraph("____________________________________________<br/><b>Dr. José Eluid Silva Urrutia</b><br/>Asesor / Director de Tesis", ParagraphStyle('Sig2', fontName='Helvetica', fontSize=8.5, alignment=TA_CENTER))]
     ]
     sig_table = Table(sig_data, colWidths=[3.5*inch, 3.5*inch])
     story.append(KeepTogether(sig_table))
     
-    # BUILD PDF
     doc.build(story, canvasmaker=NumberedCanvas)
     print(f"PDF generado exitosamente en: {output_path}")
 

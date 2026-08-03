@@ -17,6 +17,7 @@ dependencies:
   - ipykernel
   - pip
   - pip:
+    - duckdb>=1.0
     - reportlab>=4.0
     - fpdf2>=2.7
     - pmdarima>=2.0
