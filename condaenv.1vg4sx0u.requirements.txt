@@ -1,0 +1,5 @@
+reportlab>=4.0
+fpdf2>=2.7
+pmdarima>=2.0
+arch>=6.0
+causalimpact>=1.0

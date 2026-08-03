@@ -1,0 +1,65 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# === Jupyter Notebooks ===
+.ipynb_checkpoints/
+*-checkpoint.ipynb
+
+# === Environments ===
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# === macOS ===
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+# === IDE & Editors ===
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.gemini/
+.agents/
+
+# === Data Directories (Excluir bases pesadas) ===
+raw_data/*
+processed_data/*
+!raw_data/.gitkeep
+!processed_data/.gitkeep
+*.zip
+*.tar.gz
+*.7z
+
+# === Logs & Temporary Files ===
+*.log
+scratch/

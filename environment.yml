@@ -1,0 +1,24 @@
+name: tesis_estadistica
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pandas>=2.0
+  - numpy>=1.24
+  - scipy>=1.10
+  - statsmodels>=0.14
+  - scikit-learn>=1.2
+  - matplotlib>=3.7
+  - seaborn>=0.12
+  - openpyxl
+  - pyarrow
+  - jupyter
+  - ipykernel
+  - pip
+  - pip:
+    - reportlab>=4.0
+    - fpdf2>=2.7
+    - pmdarima>=2.0
+    - arch>=6.0
+    - causalimpact>=1.0
