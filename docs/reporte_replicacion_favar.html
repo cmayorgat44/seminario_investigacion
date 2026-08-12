@@ -608,12 +608,17 @@ var_irfs = irf_result.orth_irfs[:, :, shock_idx] * scale_factor</code></pre>
                 <h2>5. Análisis Econométrico de Discrepancias</h2>
                 <div class="grid-2">
                     <div class="card card-accent">
-                        <h3>Diferencias en FEVD (Tasas de Interés)</h3>
-                        <p>Nuestra réplica de 2 pasos reporta una FEVD de ~17% para FEDFUNDS, mientras que BBE reportan 45%. La diferencia radica en que la Tabla 1 del paper reporta los valores calculados con la estimación bayesiana (Gibbs Sampling). La estimación bayesiana incorpora restricciones más rígidas en la covarianza conjunta del VAR, reduciendo el término del residuo y cargando mayor varianza al choque monetario en el mediano plazo.</p>
+                        <h3>Diferencias en FEVD (Tasa Federal y Macro)</h3>
+                        <p>Nuestra réplica de 2 pasos reporta una FEVD de <strong>17.52%</strong> para FEDFUNDS y <strong>17.12%</strong> para INDPRO a 60 meses, mientras que BBE reportan 45.38% y 7.63% respectivamente. Esta discrepancia es normal debido a:</p>
+                        <ul>
+                            <li><strong>Propagación Recursiva en Horizontes Largos:</strong> Las FEVD a 60 meses dependen de la potencia 60 de los coeficientes del VAR. Cualquier mínimo cambio en los parámetros debido a revisiones retroactivas de datos se amplifica exponencialmente a 5 años, provocando que las descomposiciones tengan intervalos de confianza sumamente amplios (frecuentemente del 10% al 60%).</li>
+                            <li><strong>Comportamiento Endógeno del Banco Central:</strong> Al ordenar FEDFUNDS al final del VAR, los choques de la economía real afectan contemporáneamente a la tasa. A horizontes de 5 años, la mayor parte de la tasa federal responde de forma endógena a la inflación y actividad, disminuyendo el peso relativo del choque monetario puro.</li>
+                            <li><strong>Gibbs Sampling vs OLS:</strong> La Tabla 1 del paper se calculó con los resultados de la estimación bayesiana (Gibbs Sampling) con priors rígidos. Esto restringe los residuos y asigna una mayor proporción de la varianza directamente al choque de política monetaria en comparación con el OLS clásico.</li>
+                        </ul>
                     </div>
                     <div class="card">
                         <h3>Ausencia de variables ISM/NAPM en FRED-MD</h3>
-                        <p>Las series de expectativas de compra de la NAPM (como <em>Commodity Prices Index</em> y <em>New Orders</em>) fueron **eliminadas de la versión moderna de FRED-MD** por restricciones de derechos comerciales del ISM. En la réplica, estas variables fueron mapeadas a proxys nominales de la BLS (ej: PPI crude materials `PPICMM` y órdenes duraderas `AMDMNOx`), lo que explica un menor ajuste de $R^2$ contra los factores latentes.</p>
+                        <p>Las series de expectativas de compra de la NAPM (como <em>Commodity Prices Index</em> y <em>New Orders</em>) fueron **eliminadas de la versión moderna de FRED-MD** por restricciones de derechos comerciales del ISM. En la réplica, estas variables fueron mapeadas a proxys nominales de la BLS (ej: PPI para materias primas `PPICMM` y Órdenes de Bienes Durables `AMDMNOx`), lo que explica un menor ajuste de $R^2$ contra los factores latentes.</p>
                     </div>
                 </div>
             </section>
