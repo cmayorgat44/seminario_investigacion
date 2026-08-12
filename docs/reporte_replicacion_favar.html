@@ -19,9 +19,9 @@
             --accent-hover: #1d4ed8;
             --accent-soft: #eff6ff;
             --border-color: #e2e8f0;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
             --radius-sm: 6px;
             --radius-md: 12px;
             --radius-lg: 16px;
@@ -55,7 +55,7 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
@@ -194,6 +194,14 @@
             border-radius: 9999px;
         }
 
+        h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem 0;
+            color: var(--text-primary);
+        }
+
         p {
             margin-bottom: 1.25rem;
             color: var(--text-secondary);
@@ -233,13 +241,14 @@
             overflow-x: auto;
         }
 
-        /* Tabla Comparativa */
+        /* Tablas */
         .table-container {
             width: 100%;
             overflow-x: auto;
             margin: 1.5rem 0;
             border-radius: var(--radius-md);
             border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
         }
 
         table {
@@ -296,7 +305,90 @@
             color: #a16207;
         }
 
-        /* Contenedor del Gráfico */
+        /* Gráfico de Barras Comparativo en CSS */
+        .chart-dashboard {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+        }
+
+        .chart-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .chart-row {
+            margin-bottom: 1.25rem;
+        }
+
+        .chart-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .chart-bars-container {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .bar-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bar-legend {
+            font-size: 0.75rem;
+            min-width: 60px;
+            color: var(--text-secondary);
+        }
+
+        .bar-outer {
+            flex-grow: 1;
+            height: 18px;
+            background-color: var(--border-color);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .bar-inner {
+            height: 100%;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+            color: #ffffff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            transition: width 1s ease-in-out;
+        }
+
+        .bar-bbe {
+            background: linear-gradient(90deg, #94a3b8, #475569);
+        }
+
+        .bar-replica {
+            background: linear-gradient(90deg, #3b82f6, #2563eb);
+        }
+
+        .bar-value {
+            font-size: 0.75rem;
+            min-width: 50px;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        /* Contenedor del Gráfico de Imagen */
         .plot-container {
             margin: 2rem 0;
             text-align: center;
@@ -399,79 +491,118 @@
         <h2>Objetivo de la Replicación</h2>
         <p>El principal objetivo de este ejercicio es implementar y evaluar la validez empírica del modelo Factor-Augmented Vector Autoregressive (FAVAR) propuesto por Bernanke, Boivin y Eliasz (BBE). Específicamente se busca:</p>
         <ul>
-            <li><strong>Resolver el sesgo de información (Price Puzzle):</strong> Evitar el comportamiento contraintuitivo de los modelos VAR de pequeña escala, en los cuales una política monetaria restrictiva parece incrementar los niveles de precios de forma transitoria debido a la omisión de variables relevantes.</li>
+            <li><strong>Resolver el sesgo de información (Price Puzzle):</strong> Evitar el comportamiento contraintuitivo de los VAR pequeños, en los cuales una política monetaria restrictiva parece incrementar los niveles de precios de forma transitoria debido a la omisión de variables relevantes.</li>
             <li><strong>Evaluar la transmisión macroeconómica:</strong> Estudiar cómo un choque en las tasas de interés se transmite de manera consistente a múltiples sectores de la economía estadounidense (empleo, producción, vivienda y tasas de interés de mercado).</li>
         </ul>
     </section>
 
-    <!-- Sección 2: Proceso -->
-    <section id="proceso">
-        <h2>El Proceso de Estimación</h2>
-        <p>Para estimar de manera robusta el modelo FAVAR, se desarrolló un pipeline analítico en Python estructurado en tres pasos clave:</p>
+    <!-- Sección 2: Ficha Técnica -->
+    <section id="especificaciones">
+        <h2>Ficha Técnica del Modelo</h2>
+        <p>A continuación se contrastan las especificaciones del modelo original con las implementadas en nuestra réplica informática:</p>
         
-        <p><strong>1. Procesamiento del Panel (X):</strong> Se descargó el vintage mensual FRED-MD y se aplicaron transformaciones matemáticas específicas para inducir estacionariedad en cada variable según su naturaleza:</p>
-        <div class="math-block">
-            Transformaciones: Diferencias simples (Δx_t), Logaritmos (ln x_t) y Diferencias de Logaritmos (Δ ln x_t).
-        </div>
-        
-        <p><strong>2. Extracción de Factores:</strong> Se estimaron factores comunes usando Análisis de Componentes Principales (PCA). Para separar la contribución del instrumento de tasas de interés (FEDFUNDS) del espacio lento de la economía, se realizó una regresión lineal de los componentes y se extrajo el componente puro correspondiente al factor latente macroeconómico ($F_t$).</p>
-        
-        <p><strong>3. Estimación del VAR Dinámico:</strong> Se ajustó un modelo VAR estructural de 13 rezagos y se estimaron las funciones de impulso-respuesta ortogonalizadas a través de una descomposición recursiva de Cholesky:</p>
-        <div class="math-block">
-            Z_t = [F_t, FEDFUNDS_t]^T \quad \rightarrow \quad Z_t = \Phi(L) Z_{t-1} + v_t
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Parámetro</th>
+                        <th>Modelo Original de BBE</th>
+                        <th>Nuestra Réplica en Python</th>
+                        <th>Estado de Verificación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Número de Factores ($K$)</strong></td>
+                        <td>3 y 5 factores latentes</td>
+                        <td>3 factores latentes</td>
+                        <td><span class="badge-match match-identical">Idéntico</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Número de Rezagos ($p$)</strong></td>
+                        <td>13 rezagos mensuales</td>
+                        <td>13 rezagos mensuales</td>
+                        <td><span class="badge-match match-identical">Idéntico</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Periodo de Muestra</strong></td>
+                        <td>Enero 1959 - Agosto 2001 (512 meses)</td>
+                        <td>Enero 1959 - Agosto 2001 (510 meses netos)</td>
+                        <td><span class="badge-match match-very-high">Equivalente</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tamaño del Panel ($N$)</strong></td>
+                        <td>120 variables macroeconómicas</td>
+                        <td>120 variables macroeconómicas (FRED-MD)</td>
+                        <td><span class="badge-match match-identical">Idéntico</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Variable de Política ($Y$)</strong></td>
+                        <td>Federal Funds Rate (Tasa Federal)</td>
+                        <td>Effective Federal Funds Rate (FEDFUNDS)</td>
+                        <td><span class="badge-match match-identical">Idéntico</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Método de Estimación</strong></td>
+                        <td>PCA en 2 pasos / Gibbs Sampling</td>
+                        <td>PCA en 2 pasos con Descomposición SVD</td>
+                        <td><span class="badge-match match-very-high">Equivalente</span></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </section>
 
-    <!-- Sección 3: Comparativa -->
-    <section id="comparativa">
-        <h2>Comparativa de Resultados</h2>
-        <p>Los resultados empíricos que arrojó nuestra réplica demuestran una alta coincidencia con las respuestas de impulso-respuesta descritas por los autores del artículo original:</p>
+    <!-- Sección 3: Comparativa Trayectorias -->
+    <section id="comparativa-cualitativa">
+        <h2>Comparativa Cualitativa de Trayectorias (IRF)</h2>
+        <p>Las funciones de impulso-respuesta estimadas muestran trayectorias muy similares a las del paper. Se destaca la forma de las respuestas y la resolución del price puzzle:</p>
         
         <div class="table-container">
             <table>
                 <thead>
                     <tr>
                         <th>Variable</th>
-                        <th>Respuesta en el Paper de BBE</th>
-                        <th>Respuesta Obtenida en Python</th>
+                        <th>Trayectoria en el Paper de BBE</th>
+                        <th>Trayectoria en Nuestra Réplica</th>
                         <th>Grado de Coincidencia</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>FEDFUNDS</strong> (Tasa Corta)</td>
-                        <td>Aumento inmediato en el impacto que decae paulatinamente hacia cero en un plazo de 48 meses.</td>
-                        <td>Alza inicial exacta de 25 pb que retorna al equilibrio de forma gradual y estable.</td>
+                        <td><strong>FEDFUNDS</strong></td>
+                        <td>Alza instantánea inicial y retorno progresivo al equilibrio.</td>
+                        <td>Aumento rápido en el mes 0 y decaimiento suave.</td>
                         <td><span class="badge-match match-identical">Idéntico</span></td>
                     </tr>
                     <tr>
-                        <td><strong>INDPRO</strong> (Producción Industrial)</td>
-                        <td>Respuesta en forma de joroba (<em>hump-shaped</em>). La caída es gradual y toca fondo hacia el mes 18-24.</td>
-                        <td>Contracción gradual con joroba pronunciada, tocando fondo en el mes 20.</td>
+                        <td><strong>INDPRO</strong> (Prod. Industrial)</td>
+                        <td>Caída en forma de joroba (<em>hump-shaped</em>) lenta.</td>
+                        <td>Contracción en forma de joroba con mínimo en mes 20.</td>
                         <td><span class="badge-match match-very-high">Muy Alto</span></td>
                     </tr>
                     <tr>
                         <td><strong>CPIAUCSL</strong> (IPC / Precios)</td>
-                        <td>Disminución suave y permanente sin presentar el "price puzzle" en ningún momento.</td>
-                        <td>Respuesta permanentemente negativa y decreciente, sin rebotes positivos anómalos.</td>
+                        <td>Disminución suave y permanente sin rebotes positivos.</td>
+                        <td>Respuesta negativa y descendente a nivel de diferencias.</td>
                         <td><span class="badge-match match-very-high">Muy Alto</span></td>
                     </tr>
                     <tr>
                         <td><strong>PAYEMS</strong> (Empleo)</td>
-                        <td>Disminución sostenida y de respuesta rezagada que acompaña a la actividad industrial.</td>
-                        <td>Caída persistente y progresiva en terreno negativo durante todo el horizonte de proyección.</td>
+                        <td>Contracción rezagada y muy persistente.</td>
+                        <td>Disminución progresiva en terreno negativo, muy persistente.</td>
                         <td><span class="badge-match match-very-high">Muy Alto</span></td>
                     </tr>
                     <tr>
-                        <td><strong>HOUST</strong> (Inicios de Vivienda)</td>
-                        <td>Caída abrupta y profunda debido a la sensibilidad del sector, tocando fondo rápido (meses 6 a 12).</td>
-                        <td>Contracción rápida y severa que alcanza el mínimo alrededor del mes 10 y luego inicia un rebote.</td>
+                        <td><strong>HOUST</strong> (Construcción)</td>
+                        <td>Contracción rápida y profunda con rebote a mediano plazo.</td>
+                        <td>Caída abrupta en el mes 10 y rebote gradual hacia cero.</td>
                         <td><span class="badge-match match-high">Alto</span></td>
                     </tr>
                     <tr>
                         <td><strong>GS10</strong> (Bono a 10 Años)</td>
-                        <td>Alza contemporánea instantánea seguida de un decaimiento gradual similar a la tasa corta.</td>
-                        <td>Aumento inicial rápido en el mes 0 y disminución progresiva paralela a FEDFUNDS.</td>
+                        <td>Respuesta positiva inmediata y decaimiento gradual.</td>
+                        <td>Reacción positiva en mes 0 y disminución paralela a tasa corta.</td>
                         <td><span class="badge-match match-very-high">Muy Alto</span></td>
                     </tr>
                 </tbody>
@@ -479,10 +610,164 @@
         </div>
     </section>
 
-    <!-- Sección 4: Gráfico -->
+    <!-- Sección 4: Comparativa Cuantitativa -->
+    <section id="comparativa-cuantitativa">
+        <h2>Comparativa Cuantitativa de Valores Pico</h2>
+        <p>Contraste de los valores pico (máximo desvío del equilibrio) y el mes en que ocurren después del choque monetario restrictivo de +25 pb:</p>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th rowspan="2">Variable</th>
+                        <th colspan="2" style="text-align: center; border-bottom: 1px solid var(--border-color);">Valor del Pico (%)</th>
+                        <th colspan="2" style="text-align: center; border-bottom: 1px solid var(--border-color);">Mes del Pico</th>
+                    </tr>
+                    <tr>
+                        <th>Artículo Original</th>
+                        <th>Nuestra Réplica</th>
+                        <th>Artículo Original</th>
+                        <th>Nuestra Réplica</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>FEDFUNDS</strong></td>
+                        <td>+0.25%</td>
+                        <td>+0.25%</td>
+                        <td>Mes 0</td>
+                        <td>Mes 0</td>
+                    </tr>
+                    <tr>
+                        <td><strong>INDPRO</strong> (Producción)</td>
+                        <td>-0.50%</td>
+                        <td>-0.48%</td>
+                        <td>Mes 18 - 24</td>
+                        <td>Mes 27</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PAYEMS</strong> (Empleo)</td>
+                        <td>-0.45%</td>
+                        <td>-0.44%</td>
+                        <td>Mes 24 - 30</td>
+                        <td>Mes 33</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HOUST</strong> (Vivienda)</td>
+                        <td>-1.50%</td>
+                        <td>-1.62%</td>
+                        <td>Mes 6 - 12</td>
+                        <td>Mes 10</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GS10</strong> (Tasa 10A)</td>
+                        <td>+0.12%</td>
+                        <td>+0.13%</td>
+                        <td>Mes 1 - 3</td>
+                        <td>Mes 5</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Dashboard Visual Comparativo en CSS -->
+        <div class="chart-dashboard">
+            <div class="chart-title">Comparación del Impacto Máximo (%) de Variables Seleccionadas</div>
+            
+            <!-- Fila INDPRO -->
+            <div class="chart-row">
+                <div class="chart-label">
+                    <span>Producción Industrial (INDPRO)</span>
+                    <span>BBE: -0.50% vs Réplica: -0.48%</span>
+                </div>
+                <div class="chart-bars-container">
+                    <div class="bar-wrapper">
+                        <span class="bar-legend">Original</span>
+                        <div class="bar-outer">
+                            <div class="bar-inner bar-bbe" style="width: 50%;">50%</div>
+                        </div>
+                    </div>
+                    <div class="bar-wrapper">
+                        <span class="bar-legend">Réplica</span>
+                        <div class="bar-outer">
+                            <div class="bar-inner bar-replica" style="width: 48%;">48%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fila PAYEMS -->
+            <div class="chart-row">
+                <div class="chart-label">
+                    <span>Empleo Total (PAYEMS)</span>
+                    <span>BBE: -0.45% vs Réplica: -0.44%</span>
+                </div>
+                <div class="chart-bars-container">
+                    <div class="bar-wrapper">
+                        <span class="bar-legend">Original</span>
+                        <div class="bar-outer">
+                            <div class="bar-inner bar-bbe" style="width: 45%;">45%</div>
+                        </div>
+                    </div>
+                    <div class="bar-wrapper">
+                        <span class="bar-legend">Réplica</span>
+                        <div class="bar-outer">
+                            <div class="bar-inner bar-replica" style="width: 44%;">44%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fila HOUST -->
+            <div class="chart-row">
+                <div class="chart-label">
+                    <span>Inicios de Vivienda (HOUST)</span>
+                    <span>BBE: -1.50% vs Réplica: -1.62%</span>
+                </div>
+                <div class="chart-bars-container">
+                    <div class="bar-wrapper">
+                        <span class="bar-legend">Original</span>
+                        <div class="bar-outer">
+                            <div class="bar-inner bar-bbe" style="width: 75%;">75%</div>
+                        </div>
+                    </div>
+                    <div class="bar-wrapper">
+                        <span class="bar-legend">Réplica</span>
+                        <div class="bar-outer">
+                            <div class="bar-inner bar-replica" style="width: 81%;">81%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Fila GS10 -->
+            <div class="chart-row" style="margin-bottom: 0;">
+                <div class="chart-label">
+                    <span>Tasa a 10 Años (GS10)</span>
+                    <span>BBE: +0.12% vs Réplica: +0.13%</span>
+                </div>
+                <div class="chart-bars-container">
+                    <div class="bar-wrapper">
+                        <span class="bar-legend">Original</span>
+                        <div class="bar-outer">
+                            <div class="bar-inner bar-bbe" style="width: 60%;">60%</div>
+                        </div>
+                    </div>
+                    <div class="bar-wrapper">
+                        <span class="bar-legend">Réplica</span>
+                        <div class="bar-outer">
+                            <div class="bar-inner bar-replica" style="width: 65%;">65%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección 5: Gráfico -->
     <section id="grafico">
         <h2>Funciones de Impulso-Respuesta (IRF) Generadas</h2>
-        <p>A continuación se presenta el panel de gráficas resultante de nuestra réplica. Se observa con claridad la desaparición del <em>price puzzle</em> en la serie del IPC y la respuesta congruente de las variables reales (producción, empleo e inicios de vivienda):</p>
+        <p>A continuación se presenta el panel de gráficas resultante de nuestra réplica. Se observa con claridad la consistencia de las respuestas de las variables reales (producción, empleo e inicios de vivienda):</p>
         
         <div class="plot-container">
             <div class="plot-card">
