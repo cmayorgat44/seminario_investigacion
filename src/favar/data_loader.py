@@ -59,30 +59,46 @@ def apply_transformation(series, code):
 
 def load_and_clean_fred_md(file_path="raw_data/fred_md_current.csv", start_date="1959-01-01", end_date="2001-08-01"):
     """
-    Carga, transforma y estandariza los datos de FRED-MD.
+    Carga, transforma y estandariza los datos de FRED-MD aplicando overrides
+    para alinear las transformaciones con BBE (niveles de tasas de interés,
+    primeras diferencias de logaritmos para inflación/dinero, logaritmos para vivienda).
     Retorna:
         - df_transformed: DataFrame estandarizado de factores macroeconómicos (X)
         - y_series: La tasa de política monetaria (FEDFUNDS) sin estandarizar
         - t_codes: Diccionario con los códigos de transformación aplicados
     """
-    # Leer el archivo crudo. La primera fila (índice 0) tiene los nombres de variables.
-    # La segunda fila (índice 1) contiene los códigos de transformación (transform).
     raw_df = pd.read_csv(file_path)
     
-    # Extraer los códigos de transformación (segunda fila)
-    # La primera columna es la fecha ("sasdate"), que no tiene código de transformación
     t_codes_series = raw_df.iloc[0]
     t_codes = {col: int(t_codes_series[col]) for col in raw_df.columns if col != 'sasdate' and pd.notna(t_codes_series[col])}
     
-    # El resto del DataFrame contiene los datos. Nos saltamos la fila de códigos de transformación.
+    # OVERRIDES PARA ALINEACIÓN METODOLÓGICA CON BBE (2005)
+    for col in t_codes:
+        # Tasas de interés y rendimientos de bonos -> Niveles (1)
+        if any(p in col for p in ['FEDFUNDS', 'TB3MS', 'TB6MS', 'GS1', 'GS5', 'GS10', 'AAA', 'BAA', 'FFM', 'COMPAPFFx', 'CP3Mx']):
+            t_codes[col] = 1
+        # Índices de precios (IPC, PPI, deflactores) -> Primera diferencia de logaritmos (5)
+        elif any(p in col for p in ['CPI', 'PPI', 'WPS', 'PCEPI', 'OILPRICEx', 'PPICMM']):
+            t_codes[col] = 5
+        # Agregados monetarios y reservas -> Primera diferencia de logaritmos (5)
+        elif any(p in col for p in ['M1SL', 'M2SL', 'M2REAL', 'BOGMBASE', 'TOTRESNS', 'NONBORRES', 'BUSLOANS', 'REALLN', 'NONREVSL', 'CONSPI', 'INVEST']):
+            t_codes[col] = 5
+        # Tasa de desempleo -> Niveles (1)
+        elif any(p in col for p in ['UNRATE', 'UEMPMEAN', 'UEMPLT5', 'UEMP5TO14', 'UEMP15OV', 'UEMP15T26', 'UEMP27OV']):
+            t_codes[col] = 1
+        # Inicios de vivienda y permisos de construcción -> Logaritmo (4)
+        elif any(p in col for p in ['HOUST', 'PERMIT']):
+            t_codes[col] = 4
+        # Consumo personal real -> Diferencia de logaritmos (5)
+        elif any(p in col for p in ['DPCERA3M086SBEA', 'DDURRG3M086SBEA', 'DNDGRG3M086SBEA', 'DSERRG3M086SBEA']):
+            t_codes[col] = 5
+            
     data_df = raw_df.iloc[1:].copy()
     
     # Limpiar y parsear la columna de fecha
     data_df['sasdate'] = pd.to_datetime(data_df['sasdate'], format='%m/%d/%Y', errors='coerce')
     data_df = data_df.dropna(subset=['sasdate'])
     data_df = data_df.set_index('sasdate')
-    
-    # Eliminar filas completamente vacías al final del archivo (suelen existir notas de pie)
     data_df = data_df.dropna(how='all')
     
     # Filtrar por rango de fechas para replicar el período de BBE (1959-01 a 2001-08)
