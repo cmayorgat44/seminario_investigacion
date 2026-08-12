@@ -49,7 +49,6 @@ Icon
 *.swo
 *~
 .gemini/
-.agents/
 
 # === Data Directories (Excluir bases pesadas) ===
 raw_data/*
