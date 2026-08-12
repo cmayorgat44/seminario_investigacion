@@ -486,6 +486,20 @@
         </div>
     </div>
 
+    <!-- Sección: Reseña del Artículo -->
+    <section id="resena">
+        <h2>Reseña del Artículo y Resultados a Replicar</h2>
+        <p>El artículo fundacional de Bernanke, Boivin y Eliasz introduce la metodología <strong>Factor-Augmented Vector Autoregressive (FAVAR)</strong> para corregir la escasez de información en los modelos VAR tradicionales de pequeña escala. En la práctica, los bancos centrales analizan cientos de indicadores macroeconómicos para tomar decisiones de política. Al omitir estas variables, los VAR tradicionales sufren de sesgo de información, lo que genera anomalías empíricas como el <em>price puzzle</em> (incrementos de precios tras alzas en las tasas de interés).</p>
+        <p>Al extraer factores comunes latentes mediante Componentes Principales (PCA) de un panel de 120 variables y agregarlos al VAR, el modelo FAVAR representa de forma más completa el flujo informativo del mercado y estabiliza la estimación de la política monetaria.</p>
+        <p><strong>Resultados clave a replicar:</strong></p>
+        <ul>
+            <li>Contracción gradual en forma de joroba (<em>hump-shaped</em>) de la producción industrial (`INDPRO`) y del empleo (`PAYEMS`).</li>
+            <li>Sensibilidad extrema y contracción veloz del sector inmobiliario (`HOUST`).</li>
+            <li>Respuestas consistentes de tasas de interés de largo plazo (`GS10`).</li>
+            <li>Reducción del nivel de precios al consumidor (`CPIAUCSL`) resolviendo la anomalía del <em>price puzzle</em>.</li>
+        </ul>
+    </section>
+
     <!-- Sección 1: Objetivo -->
     <section id="objetivo">
         <h2>Objetivo de la Replicación</h2>
@@ -775,6 +789,24 @@
                 <div class="plot-caption">Figura 1: Funciones de Impulso-Respuesta estimadas en Python ante un choque restrictivo de política monetaria (+25 pb) en un FAVAR (K=3, p=13).</div>
             </div>
         </div>
+    </section>
+
+    <!-- Sección: Análisis de Discrepancias -->
+    <section id="discrepancias">
+        <h2>Análisis de Discrepancias y Desafíos de Replicación</h2>
+        <p>Al evaluar los resultados gráficos y cuantitativos, se observa que las trayectorias de producción (`INDPRO`), empleo (`PAYEMS`), vivienda (`HOUST`) y bonos (`GS10`) coinciden de forma sumamente precisa con las reportadas por los autores. Sin embargo, la trayectoria de precios al consumidor (<strong>IPC</strong>) muestra una deriva alcista a mediano plazo, lo que constituye un <em>price puzzle</em> remanente. Existen razones econométricas e informáticas claras para esta discrepancia:</p>
+        
+        <h3>1. Limitación en el número de factores (K = 3)</h3>
+        <p>En el artículo original, los autores demuestran y señalan explícitamente que la estimación en dos pasos del modelo FAVAR utilizando únicamente <strong>3 factores latentes</strong> no logra resolver el <em>price puzzle</em> de forma total en el método de componentes principales. Los autores muestran que se requiere ampliar la dimensión a 5 factores ($K=5$) o recurrir a la estimación conjunta de un paso por Gibbs Sampling (MCMC) para eliminar completamente la inercia positiva en el IPC.</p>
+        
+        <h3>2. Sensibilidad al proceso de doble acumulación</h3>
+        <p>En la base de datos FRED-MD, el IPC (`CPIAUCSL`) requiere una transformación de código 6 (segunda diferencia de logaritmos, es decir, cambio en la inflación). Para obtener la respuesta en niveles (Log-IPC), el algoritmo debe aplicar una <strong>doble suma acumulativa</strong> (doble integración). Bajo este procedimiento, cualquier pequeña perturbación positiva o sesgo de estimación inicial se acumula de forma cuadrática a lo largo de los 48 meses, traduciéndose en una deriva alcista visible al final del horizonte.</p>
+        
+        <h3>3. Clasificación y rotación de factores</h3>
+        <p>La ortogonalización del choque requiere clasificar minuciosamente el panel de 120 variables en series "lentas" (aquellas que no responden contemporáneamente a choques de tasas, como producción y empleo) y "rápidas" (financieras). Si la lista de variables clasificadas como lentas en nuestra réplica informática difiere ligeramente de la partición subjetiva de datos realizada por los autores en el artículo original, parte del choque de FEDFUNDS se filtra contemporáneamente en los factores limpios, distorsionando la respuesta de precios.</p>
+        
+        <h3>4. Revisiones retrospectivas de FRED-MD</h3>
+        <p>A diferencia del set de datos estático recopilado en 2004 por los autores, la base de datos moderna FRED-MD incorpora constantes revisiones retroactivas que las agencias federales de EE. UU. (BEA y BLS) aplican a datos históricos de décadas pasadas (por ejemplo, ajustes de desestacionalización del empleo y producción). Estas revisiones numéricas modifican ligeramente la estructura de covarianza de la muestra histórica, alterando la rotación final de los factores estimados.</p>
     </section>
 
     <footer>
