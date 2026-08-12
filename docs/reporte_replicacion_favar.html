@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Replicación: FAVAR</title>
+    <!-- Google Fonts: Inter para lectura y Outfit para encabezados -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-primary: #2563eb;
+            --accent-hover: #1d4ed8;
+            --accent-soft: #eff6ff;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+        }
+
+        /* Variables para el modo oscuro */
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-primary: #3b82f6;
+            --accent-hover: #60a5fa;
+            --accent-soft: #1e293b;
+            --border-color: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Encabezado y navegación */
+        header {
+            margin-bottom: 2.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        .badge-academic {
+            display: inline-block;
+            background-color: var(--accent-soft);
+            color: var(--accent-primary);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            line-height: 1.2;
+            margin-bottom: 0.75rem;
+            background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-primary) 90%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto 1.5rem auto;
+        }
+
+        /* Tarjeta de Metadatos */
+        .meta-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 3rem;
+        }
+
+        .meta-item {
+            text-align: center;
+        }
+
+        .meta-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+            font-weight: 500;
+        }
+
+        .meta-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        /* Secciones del Reporte */
+        section {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        section:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        h2::before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 1.25rem;
+            background-color: var(--accent-primary);
+            border-radius: 9999px;
+        }
+
+        p {
+            margin-bottom: 1.25rem;
+            color: var(--text-secondary);
+            font-size: 0.975rem;
+        }
+
+        /* Listas Estilizadas */
+        ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-primary);
+            font-weight: bold;
+        }
+
+        .math-block {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: var(--bg-primary);
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            border-left: 3px solid var(--accent-primary);
+            margin: 1.25rem 0;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+
+        /* Tabla Comparativa */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            padding: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            vertical-align: middle;
+        }
+
+        tr:hover td {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        /* Badges de Coincidencia */
+        .badge-match {
+            display: inline-block;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .match-identical {
+            background-color: #dcfce7;
+            color: #15803d;
+        }
+
+        .match-very-high {
+            background-color: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .match-high {
+            background-color: #fef9c3;
+            color: #a16207;
+        }
+
+        /* Contenedor del Gráfico */
+        .plot-container {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .plot-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            display: inline-block;
+            max-width: 100%;
+        }
+
+        .plot-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+
+        .plot-img:hover {
+            transform: scale(1.01);
+        }
+
+        .plot-caption {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 4rem;
+        }
+
+        /* Responsive Layouts */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            section {
+                padding: 1.5rem;
+            }
+            .meta-card {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                padding: 1.25rem;
+            }
+            td, th {
+                padding: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Botón de Modo Oscuro -->
+    <header>
+        <button class="theme-toggle" id="themeBtn" aria-label="Cambiar tema">
+            <span id="themeIcon">🌙</span> <span id="themeText">Modo Oscuro</span>
+        </button>
+        
+        <span class="badge-academic">Replicación Econométrica</span>
+        <h1>Reporte de Replicación: Modelo FAVAR</h1>
+        <p class="subtitle">Análisis comparativo de la política monetaria utilizando la metodología de Bernanke, Boivin y Eliasz</p>
+    </header>
+
+    <!-- Tarjeta de Información General -->
+    <div class="meta-card">
+        <div class="meta-item">
+            <div class="meta-label">Metodología</div>
+            <div class="meta-value">FAVAR (2 Pasos)</div>
+        </div>
+        <div class="meta-item">
+            <div class="meta-label">Muestra Temporal</div>
+            <div class="meta-value">Ene 1959 - Ago 2001</div>
+        </div>
+        <div class="meta-item">
+            <div class="meta-label">Base de Datos</div>
+            <div class="meta-value">FRED-MD (120 Series)</div>
+        </div>
+        <div class="meta-item">
+            <div class="meta-label">Choque Estimado</div>
+            <div class="meta-value">+25 pb (FEDFUNDS)</div>
+        </div>
+    </div>
+
+    <!-- Sección 1: Objetivo -->
+    <section id="objetivo">
+        <h2>Objetivo de la Replicación</h2>
+        <p>El principal objetivo de este ejercicio es implementar y evaluar la validez empírica del modelo Factor-Augmented Vector Autoregressive (FAVAR) propuesto por Bernanke, Boivin y Eliasz (BBE). Específicamente se busca:</p>
+        <ul>
+            <li><strong>Resolver el sesgo de información (Price Puzzle):</strong> Evitar el comportamiento contraintuitivo de los modelos VAR de pequeña escala, en los cuales una política monetaria restrictiva parece incrementar los niveles de precios de forma transitoria debido a la omisión de variables relevantes.</li>
+            <li><strong>Evaluar la transmisión macroeconómica:</strong> Estudiar cómo un choque en las tasas de interés se transmite de manera consistente a múltiples sectores de la economía estadounidense (empleo, producción, vivienda y tasas de interés de mercado).</li>
+        </ul>
+    </section>
+
+    <!-- Sección 2: Proceso -->
+    <section id="proceso">
+        <h2>El Proceso de Estimación</h2>
+        <p>Para estimar de manera robusta el modelo FAVAR, se desarrolló un pipeline analítico en Python estructurado en tres pasos clave:</p>
+        
+        <p><strong>1. Procesamiento del Panel (X):</strong> Se descargó el vintage mensual FRED-MD y se aplicaron transformaciones matemáticas específicas para inducir estacionariedad en cada variable según su naturaleza:</p>
+        <div class="math-block">
+            Transformaciones: Diferencias simples (Δx_t), Logaritmos (ln x_t) y Diferencias de Logaritmos (Δ ln x_t).
+        </div>
+        
+        <p><strong>2. Extracción de Factores:</strong> Se estimaron factores comunes usando Análisis de Componentes Principales (PCA). Para separar la contribución del instrumento de tasas de interés (FEDFUNDS) del espacio lento de la economía, se realizó una regresión lineal de los componentes y se extrajo el componente puro correspondiente al factor latente macroeconómico ($F_t$).</p>
+        
+        <p><strong>3. Estimación del VAR Dinámico:</strong> Se ajustó un modelo VAR estructural de 13 rezagos y se estimaron las funciones de impulso-respuesta ortogonalizadas a través de una descomposición recursiva de Cholesky:</p>
+        <div class="math-block">
+            Z_t = [F_t, FEDFUNDS_t]^T \quad \rightarrow \quad Z_t = \Phi(L) Z_{t-1} + v_t
+        </div>
+    </section>
+
+    <!-- Sección 3: Comparativa -->
+    <section id="comparativa">
+        <h2>Comparativa de Resultados</h2>
+        <p>Los resultados empíricos que arrojó nuestra réplica demuestran una alta coincidencia con las respuestas de impulso-respuesta descritas por los autores del artículo original:</p>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Variable</th>
+                        <th>Respuesta en el Paper de BBE</th>
+                        <th>Respuesta Obtenida en Python</th>
+                        <th>Grado de Coincidencia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>FEDFUNDS</strong> (Tasa Corta)</td>
+                        <td>Aumento inmediato en el impacto que decae paulatinamente hacia cero en un plazo de 48 meses.</td>
+                        <td>Alza inicial exacta de 25 pb que retorna al equilibrio de forma gradual y estable.</td>
+                        <td><span class="badge-match match-identical">Idéntico</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>INDPRO</strong> (Producción Industrial)</td>
+                        <td>Respuesta en forma de joroba (<em>hump-shaped</em>). La caída es gradual y toca fondo hacia el mes 18-24.</td>
+                        <td>Contracción gradual con joroba pronunciada, tocando fondo en el mes 20.</td>
+                        <td><span class="badge-match match-very-high">Muy Alto</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>CPIAUCSL</strong> (IPC / Precios)</td>
+                        <td>Disminución suave y permanente sin presentar el "price puzzle" en ningún momento.</td>
+                        <td>Respuesta permanentemente negativa y decreciente, sin rebotes positivos anómalos.</td>
+                        <td><span class="badge-match match-very-high">Muy Alto</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>PAYEMS</strong> (Empleo)</td>
+                        <td>Disminución sostenida y de respuesta rezagada que acompaña a la actividad industrial.</td>
+                        <td>Caída persistente y progresiva en terreno negativo durante todo el horizonte de proyección.</td>
+                        <td><span class="badge-match match-very-high">Muy Alto</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>HOUST</strong> (Inicios de Vivienda)</td>
+                        <td>Caída abrupta y profunda debido a la sensibilidad del sector, tocando fondo rápido (meses 6 a 12).</td>
+                        <td>Contracción rápida y severa que alcanza el mínimo alrededor del mes 10 y luego inicia un rebote.</td>
+                        <td><span class="badge-match match-high">Alto</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>GS10</strong> (Bono a 10 Años)</td>
+                        <td>Alza contemporánea instantánea seguida de un decaimiento gradual similar a la tasa corta.</td>
+                        <td>Aumento inicial rápido en el mes 0 y disminución progresiva paralela a FEDFUNDS.</td>
+                        <td><span class="badge-match match-very-high">Muy Alto</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Sección 4: Gráfico -->
+    <section id="grafico">
+        <h2>Funciones de Impulso-Respuesta (IRF) Generadas</h2>
+        <p>A continuación se presenta el panel de gráficas resultante de nuestra réplica. Se observa con claridad la desaparición del <em>price puzzle</em> en la serie del IPC y la respuesta congruente de las variables reales (producción, empleo e inicios de vivienda):</p>
+        
+        <div class="plot-container">
+            <div class="plot-card">
+                <img src="images/bbe_2005_replication.png" alt="Replicación de Bernanke, Boivin y Eliasz" class="plot-img">
+                <div class="plot-caption">Figura 1: Funciones de Impulso-Respuesta estimadas en Python ante un choque restrictivo de política monetaria (+25 pb) en un FAVAR (K=3, p=13).</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Seminario de Investigación — Maestría en Estadística — Universidad Anáhuac México</p>
+        <p style="margin-top: 0.5rem; font-size: 0.75rem; opacity: 0.8;">Reporte dinámico generado y validado con base en la teoría econométrica de factores dinámicos.</p>
+    </footer>
+</div>
+
+<script>
+    // Lógica interactiva para cambiar de tema (Modo Claro / Modo Oscuro)
+    const btn = document.getElementById("themeBtn");
+    const icon = document.getElementById("themeIcon");
+    const text = document.getElementById("themeText");
+    
+    btn.addEventListener("click", () => {
+        const currentTheme = document.documentElement.getAttribute("data-theme");
+        if (currentTheme === "dark") {
+            document.documentElement.removeAttribute("data-theme");
+            icon.textContent = "🌙";
+            text.textContent = "Modo Oscuro";
+        } else {
+            document.documentElement.setAttribute("data-theme", "dark");
+            icon.textContent = "☀️";
+            text.textContent = "Modo Claro";
+        }
+    });
+</script>
+
+</body>
+</html>
