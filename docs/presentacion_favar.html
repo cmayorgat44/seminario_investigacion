@@ -11,6 +11,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/simple.min.css" id="theme">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/presentation.css">
+    <!-- MathJax -->
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
     <div class="reveal">
@@ -22,7 +31,7 @@
                 <h3>Bernanke, Boivin y Eliasz (2005)</h3>
                 <p>Medición de los Efectos de la Política Monetaria</p>
                 <br>
-                <p><small>Presentado por: <strong>Carlos Guillermo Mayorga Tapia</strong></small></p>
+                <p><small><strong>Carlos Guillermo Mayorga Tapia</strong></small></p>
                 <p><small>Maestría en Estadística — Universidad Anáhuac México Norte</small></p>
             </section>
 
@@ -60,9 +69,9 @@
                 </section>
             </section>
 
-            <!-- Slide 3: Nuestra Réplica -->
+            <!-- Slide 3: Réplica -->
             <section>
-                <h2>2. Nuestra Réplica</h2>
+                <h2>2. Réplica</h2>
                 <div class="grid-2">
                     <div class="card">
                         <h3>Implementación en Python</h3>
@@ -92,9 +101,9 @@
                             <tr>
                                 <th>Variable</th>
                                 <th>R² (BBE Original)</th>
-                                <th>R² (Nuestra Réplica)</th>
+                                <th>R² (Implementación)</th>
                                 <th>FEVD (BBE)</th>
-                                <th>FEVD (Réplica)</th>
+                                <th>FEVD (Implementación)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -123,7 +132,7 @@
                         <div class="caption">El paper presenta el residual estructural de la tasa de fondos federales (choque puro).</div>
                     </div>
                     <div class="comparison-box">
-                        <h4>Nuestra Réplica (Python)</h4>
+                        <h4>Implementación (Python)</h4>
                         <img src="images/favar_fig1_shock.png" alt="Replica Policy Shock">
                         <div class="caption">Residual estructural ($e_t = P^{-1} u_t$) de FEDFUNDS en el FAVAR. Notar alta volatilidad en los años 80s (Volcker).</div>
                     </div>
@@ -135,7 +144,7 @@
                 <h2>5. Comparativa: Figura 3 (Factores)</h2>
                 <p style="font-size: 0.6em;">Respuestas de los factores latentes ante un choque de +25pb.</p>
                 <div class="comparison-box" style="width: 100%;">
-                    <h4>Nuestra Réplica (Python)</h4>
+                    <h4>Implementación (Python)</h4>
                     <img src="images/favar_fig3_factors.png" alt="Replica Factors IRF" style="max-height: 250px; width: 100%;">
                     <div class="caption">Las IRFs de los factores demuestran dinámicas complejas. El Factor 1 absorbe actividad real, el Factor 2 absorbe tasas y agregados.</div>
                 </div>
@@ -179,7 +188,7 @@
                 </div>
                 <div class="caveat-box">
                     <strong>2. Estimación: Componentes Principales vs Gibbs Sampling</strong>
-                    <p>BBE proponen dos métodos. Nosotros implementamos el enfoque estándar de <strong>Dos Pasos (PCA + VAR)</strong> por su eficiencia computacional. La Tabla 1 del paper original fue reportada usando el método computacionalmente intensivo de MCMC conjunto.</p>
+                    <p>BBE proponen dos métodos. Se implementó el enfoque estándar de <strong>Dos Pasos (PCA + VAR)</strong> por su eficiencia computacional. La Tabla 1 del paper original fue reportada usando el método computacionalmente intensivo de MCMC conjunto.</p>
                 </div>
                 <div class="caveat-box">
                     <strong>3. Sensibilidad del FEVD a Horizontes Largos</strong>
