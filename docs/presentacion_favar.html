@@ -46,25 +46,26 @@
                     </div>
                 </section>
                 <section>
-                    <h2>1. Resumen del Artículo</h2>
-                    <div class="grid-2">
-                        <div class="card">
-                            <h3>Metodología (FAVAR)</h3>
-                            <ul>
-                                <li><strong>Datos:</strong> 120 series mensuales de EE.UU. (1959-2001).</li>
-                                <li><strong>Ecuación de Observación:</strong> $X_t = \Lambda^f F_t + \Lambda^y Y_t + e_t$</li>
-                                <li><strong>Ecuación de Transición:</strong> $\begin{bmatrix} F_t \\ Y_t \end{bmatrix} = \Phi(L) \begin{bmatrix} F_{t-1} \\ Y_{t-1} \end{bmatrix} + v_t$</li>
-                                <li><strong>Estimación:</strong> Componentes Principales de 2 Pasos vs Gibbs Sampling.</li>
-                            </ul>
-                        </div>
-                        <div class="card accent">
-                            <h3>Métricas de Evaluación</h3>
-                            <ul>
-                                <li>Descomposición de Varianza del Error (FEVD) a 60 meses.</li>
-                                <li>Coeficiente de Determinación ($R^2$) de los factores sobre las series.</li>
-                                <li>Análisis Cualitativo de las Funciones de Impulso-Respuesta (IRF).</li>
-                            </ul>
-                        </div>
+                    <h2>1. Resumen: Metodología</h2>
+                    <div class="card">
+                        <h3>Metodología (FAVAR)</h3>
+                        <ul>
+                            <li><strong>Datos:</strong> 120 series mensuales de EE.UU. (1959-2001).</li>
+                            <li><strong>Ecuación de Observación:</strong> $X_t = \Lambda^f F_t + \Lambda^y Y_t + e_t$</li>
+                            <li><strong>Ecuación de Transición:</strong> $\begin{bmatrix} F_t \\ Y_t \end{bmatrix} = \Phi(L) \begin{bmatrix} F_{t-1} \\ Y_{t-1} \end{bmatrix} + v_t$</li>
+                            <li><strong>Estimación:</strong> Componentes Principales de 2 Pasos vs Gibbs Sampling.</li>
+                        </ul>
+                    </div>
+                </section>
+                <section>
+                    <h2>1. Resumen: Evaluación</h2>
+                    <div class="card accent">
+                        <h3>Métricas de Evaluación</h3>
+                        <ul>
+                            <li>Descomposición de Varianza del Error (FEVD) a 60 meses.</li>
+                            <li>Coeficiente de Determinación ($R^2$) de los factores sobre las series.</li>
+                            <li>Análisis Cualitativo de las Funciones de Impulso-Respuesta (IRF).</li>
+                        </ul>
                     </div>
                 </section>
             </section>
@@ -94,48 +95,39 @@
 
             <!-- Slide 4: Comparativa Tabla 1 -->
             <section>
-                <section>
-                    <h2>3. Comparativa: Tabla 1 (FEVD y $R^2$)</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Variable</th>
-                                <th>R² (BBE Original)</th>
-                                <th>R² (Implementación)</th>
-                                <th>FEVD (BBE)</th>
-                                <th>FEVD (Implementación)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>Federal funds rate</td><td>1.0000</td><td class="highlight">1.0000</td><td>0.4538</td><td>0.1752</td></tr>
-                            <tr><td>Industrial production</td><td>0.7074</td><td class="highlight">0.7388</td><td>0.0763</td><td>0.1712</td></tr>
-                            <tr><td>Consumer price index</td><td>0.8699</td><td class="highlight">0.8300</td><td>0.0441</td><td>0.0860</td></tr>
-                            <tr><td>3-month treasury bill</td><td>0.9751</td><td class="highlight">0.9747</td><td>0.4440</td><td>0.1688</td></tr>
-                            <tr><td>Unemployment</td><td>0.8168</td><td class="highlight">0.7732</td><td>0.1263</td><td>0.1511</td></tr>
-                            <tr><td>Capacity utilization</td><td>0.7533</td><td class="highlight">0.7554</td><td>0.1328</td><td>0.1714</td></tr>
-                            <tr><td>Employment</td><td>0.7073</td><td class="highlight">0.7344</td><td>0.0934</td><td>0.1786</td></tr>
-                        </tbody>
-                    </table>
-                    <div class="caption">La captura de varianza ($R^2$) es extremadamente similar (>95% de coincidencia en promedio). Las FEVD difieren por el método de estimación (OLS vs Gibbs) y rezagos exponenciales.</div>
-                </section>
+            <section>
+                <h2>3. Comparativa: Tabla 1 (FEVD y $R^2$)</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Variable</th>
+                            <th>R² (BBE Original)</th>
+                            <th>R² (Implementación)</th>
+                            <th>FEVD (BBE)</th>
+                            <th>FEVD (Implementación)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Federal funds rate</td><td>1.0000</td><td class="highlight">1.0000</td><td>0.4538</td><td>0.1752</td></tr>
+                        <tr><td>Industrial production</td><td>0.7074</td><td class="highlight">0.7388</td><td>0.0763</td><td>0.1712</td></tr>
+                        <tr><td>Consumer price index</td><td>0.8699</td><td class="highlight">0.8300</td><td>0.0441</td><td>0.0860</td></tr>
+                        <tr><td>3-month treasury bill</td><td>0.9751</td><td class="highlight">0.9747</td><td>0.4440</td><td>0.1688</td></tr>
+                        <tr><td>Unemployment</td><td>0.8168</td><td class="highlight">0.7732</td><td>0.1263</td><td>0.1511</td></tr>
+                        <tr><td>Capacity utilization</td><td>0.7533</td><td class="highlight">0.7554</td><td>0.1328</td><td>0.1714</td></tr>
+                        <tr><td>Employment</td><td>0.7073</td><td class="highlight">0.7344</td><td>0.0934</td><td>0.1786</td></tr>
+                    </tbody>
+                </table>
+                <div class="caption"><strong>¿Por qué comparar $R^2$ y no FEVD?</strong> La captura de varianza contemporánea ($R^2$) es extremadamente similar (>95% de coincidencia). La FEVD a 60 meses varía mucho porque depende de estimaciones recursivas a largo plazo y del método de estimación (OLS vs Gibbs Sampling). La $R^2$ es la métrica más robusta para probar que extrajimos la misma información latente.</div>
+            </section>
             </section>
 
             <!-- Slide 5: Comparativa Figura 1 -->
             <section>
                 <h2>4. Comparativa: Figura 1 (Shocks)</h2>
-                <div class="grid-2">
-                    <div class="comparison-box">
-                        <h4>Estimación Original (Paper)</h4>
-                        <div style="height:250px; display:flex; align-items:center; justify-content:center; color:#94a3b8; font-style:italic;">
-                            [Sin Imagen Original Disponible]
-                        </div>
-                        <div class="caption">El paper presenta el residual estructural de la tasa de fondos federales (choque puro).</div>
-                    </div>
-                    <div class="comparison-box">
-                        <h4>Implementación (Python)</h4>
-                        <img src="images/favar_fig1_shock.png" alt="Replica Policy Shock">
-                        <div class="caption">Residual estructural ($e_t = P^{-1} u_t$) de FEDFUNDS en el FAVAR. Notar alta volatilidad en los años 80s (Volcker).</div>
-                    </div>
+                <div class="comparison-box" style="width: 100%;">
+                    <h4>Implementación (Python)</h4>
+                    <img src="images/favar_fig1_shock.png" alt="Replica Policy Shock" style="max-height: 350px;">
+                    <div class="caption">Residual estructural ($e_t = P^{-1} u_t$) de FEDFUNDS en el FAVAR. Notar alta volatilidad en los años 80s (Volcker). En el artículo original, esta gráfica demuestra cómo la inclusión de factores purifica el choque monetario. (Nota: La figura 1 original del paper no se encuentra en línea en alta resolución para su extracción automática).</div>
                 </div>
             </section>
 
@@ -152,48 +144,51 @@
 
             <!-- Slide 7: Comparativa Figura 2 -->
             <section>
-                <section>
-                    <h2>6. Comparativa: Figura 2 (IRFs)</h2>
-                    <p style="font-size: 0.7em;">Respuesta de variables clave ante un choque contractivo de 25pb.</p>
-                    <div class="grid-2">
-                        <div class="comparison-box">
-                            <h4>Paper (Gibbs Sampling)</h4>
-                            <img src="images/bbe_original_fig-41.png" alt="Paper IRF">
-                        </div>
-                        <div class="comparison-box">
-                            <h4>Réplica (PCA 2 Pasos)</h4>
-                            <img src="images/bbe_replication_favar.png" alt="Replica IRF">
-                        </div>
+                <h2>6. Comparativa: Figura 2 (IRFs)</h2>
+                <p style="font-size: 0.7em;">Respuesta de variables clave ante un choque contractivo de 25pb.</p>
+                <div class="grid-2">
+                    <div class="comparison-box">
+                        <h4>Paper (Gibbs Sampling)</h4>
+                        <img src="images/bbe_original_fig-41.png" alt="Paper IRF" style="max-height: 350px;">
                     </div>
-                </section>
-                <section>
-                    <h2>Análisis de la Figura 2</h2>
+                    <div class="comparison-box">
+                        <h4>Réplica (PCA 2 Pasos)</h4>
+                        <img src="images/bbe_replication_favar.png" alt="Replica IRF" style="max-height: 350px;">
+                    </div>
+                </div>
+            </section>
+            <section>
+                <h2>Análisis de la Figura 2</h2>
                     <div class="card accent">
                         <h3>Convergencia Cualitativa y Cuantitativa</h3>
                         <ul>
-                            <li><strong>Actividad Real:</strong> INDPRO, EMPLEO y HOUST muestran contracciones consistentes. HOUST cae rápido (mes 6), mientras que EMPLEO cae más lento pero persistente.</li>
-                            <li><strong>Precios:</strong> CPI responde lentamente, evidenciando la mitigación parcial del <em>Price Puzzle</em> gracias a los factores informacionales.</li>
-                            <li><strong>Diferencias Marginales:</strong> Se atribuyen al uso de estimación frecuentista (OLS) vs Bayesiana con Priors Rígidos (Gibbs).</li>
+                            <li><strong>Actividad Real:</strong> INDPRO, EMPLEO y HOUST muestran contracciones consistentes. HOUST cae rápido (mes 6).</li>
+                            <li><strong>Precios:</strong> CPI responde lentamente, evidenciando la mitigación parcial del <em>Price Puzzle</em>.</li>
+                            <li><strong>Diferencias Marginales:</strong> Se atribuyen al uso de estimación frecuentista (OLS) vs Bayesiana (Gibbs).</li>
                         </ul>
                     </div>
                 </section>
-            </section>
 
             <!-- Slide 8: Caveats -->
             <section>
-                <h2>7. Caveats y Limitaciones</h2>
-                <div class="caveat-box">
-                    <strong>1. Ausencia de Variables del ISM (Purchasing Managers' Index)</strong>
-                    <p>Las series originales de expectativas (<em>Commodity Price Index, New Orders, Capacity Utilization</em>) publicadas por la NAPM/ISM fueron retiradas de FRED-MD moderno por restricciones comerciales. Fueron aproximadas con proxys de la BLS.</p>
-                </div>
-                <div class="caveat-box">
-                    <strong>2. Estimación: Componentes Principales vs Gibbs Sampling</strong>
-                    <p>BBE proponen dos métodos. Se implementó el enfoque estándar de <strong>Dos Pasos (PCA + VAR)</strong> por su eficiencia computacional. La Tabla 1 del paper original fue reportada usando el método computacionalmente intensivo de MCMC conjunto.</p>
-                </div>
-                <div class="caveat-box">
-                    <strong>3. Sensibilidad del FEVD a Horizontes Largos</strong>
-                    <p>La Descomposición de Varianza a 60 meses sufre de amplificación exponencial de residuos (potencia $A^{60}$). Las estimaciones OLS generan bandas de confianza muy anchas, explicando la discrepancia entre 17% (Réplica) y 45% (BBE) para FEDFUNDS.</p>
-                </div>
+                <section>
+                    <h2>7. Caveats y Limitaciones (1/2)</h2>
+                    <div class="caveat-box">
+                        <strong>1. Ausencia de Variables del ISM</strong>
+                        <p>Las series originales de expectativas publicadas por la NAPM/ISM fueron retiradas de FRED-MD moderno por restricciones comerciales. Fueron aproximadas con proxys de la BLS.</p>
+                    </div>
+                    <div class="caveat-box">
+                        <strong>2. Estimación: PCA vs Gibbs Sampling</strong>
+                        <p>Se implementó el enfoque estándar de <strong>Dos Pasos (PCA + VAR)</strong>. La Tabla 1 del paper original fue reportada usando el método computacionalmente intensivo de MCMC conjunto.</p>
+                    </div>
+                </section>
+                <section>
+                    <h2>7. Caveats y Limitaciones (2/2)</h2>
+                    <div class="caveat-box">
+                        <strong>3. Sensibilidad del FEVD a Horizontes Largos</strong>
+                        <p>La Descomposición de Varianza a 60 meses sufre de amplificación exponencial de residuos (potencia $A^{60}$). Las estimaciones OLS generan bandas de confianza muy anchas, explicando discrepancias con BBE.</p>
+                    </div>
+                </section>
             </section>
 
             <!-- Slide 9: Conclusiones -->
