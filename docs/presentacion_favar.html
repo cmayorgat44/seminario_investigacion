@@ -124,10 +124,17 @@
             <!-- Slide 5: Comparativa Figura 1 -->
             <section>
                 <h2>4. Comparativa: Figura 1 (Shocks)</h2>
-                <div class="comparison-box" style="width: 100%;">
-                    <h4>Implementación (Python)</h4>
-                    <img src="images/favar_fig1_shock.png" alt="Replica Policy Shock" style="max-height: 350px;">
-                    <div class="caption">Residual estructural ($e_t = P^{-1} u_t$) de FEDFUNDS en el FAVAR. Notar alta volatilidad en los años 80s (Volcker). En el artículo original, esta gráfica demuestra cómo la inclusión de factores purifica el choque monetario. (Nota: La figura 1 original del paper no se encuentra en línea en alta resolución para su extracción automática).</div>
+                <div class="grid-2">
+                    <div class="comparison-box">
+                        <h4>Estimación Original (Paper)</h4>
+                        <img src="images/bbe_original_fig-40.png" alt="Original Policy Shock" style="max-height: 200px;">
+                        <div class="caption">El paper presenta el residual estructural de la tasa de fondos federales (choque puro).</div>
+                    </div>
+                    <div class="comparison-box">
+                        <h4>Implementación (Python)</h4>
+                        <img src="images/favar_fig1_shock.png" alt="Replica Policy Shock" style="max-height: 200px;">
+                        <div class="caption">Residual estructural ($e_t = P^{-1} u_t$) de FEDFUNDS en el FAVAR.</div>
+                    </div>
                 </div>
             </section>
 
@@ -149,11 +156,11 @@
                 <div class="grid-2">
                     <div class="comparison-box">
                         <h4>Paper (Gibbs Sampling)</h4>
-                        <img src="images/bbe_original_fig-41.png" alt="Paper IRF" style="max-height: 350px;">
+                        <img src="images/bbe_original_fig-41.png" alt="Paper IRF" style="max-height: 280px;">
                     </div>
                     <div class="comparison-box">
                         <h4>Réplica (PCA 2 Pasos)</h4>
-                        <img src="images/bbe_replication_favar.png" alt="Replica IRF" style="max-height: 350px;">
+                        <img src="images/bbe_replication_favar.png" alt="Replica IRF" style="max-height: 280px;">
                     </div>
                 </div>
             </section>
@@ -212,7 +219,8 @@
         Reveal.initialize({
             controls: true,
             progress: true,
-            center: true,
+            center: false,
+            margin: 0.05,
             hash: true,
             transition: 'slide' // none/fade/slide/convex/concave/zoom
         });
