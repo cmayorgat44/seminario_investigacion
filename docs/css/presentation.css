@@ -1,0 +1,150 @@
+/* Custom Theme for FAVAR Replication Presentation */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap');
+
+:root {
+  --primary-color: #0f172a;
+  --secondary-color: #3b82f6;
+  --accent-color: #10b981;
+  --text-main: #334155;
+  --bg-color: #f8fafc;
+}
+
+.reveal {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-main);
+  background-color: var(--bg-color);
+}
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+  font-family: 'Playfair Display', serif;
+  color: var(--primary-color);
+  text-transform: none;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.reveal h1 {
+  font-size: 2.8em;
+  margin-bottom: 0.5em;
+  border-bottom: 3px solid var(--secondary-color);
+  display: inline-block;
+  padding-bottom: 0.2em;
+}
+
+.reveal h2 {
+  font-size: 2em;
+  margin-bottom: 0.8em;
+  color: var(--secondary-color);
+}
+
+.reveal section img {
+  border: none;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  max-height: 50vh;
+  transition: transform 0.3s ease;
+}
+
+.reveal section img:hover {
+  transform: scale(1.02);
+}
+
+.reveal .grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  align-items: center;
+}
+
+.reveal .grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.reveal .card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  font-size: 0.7em;
+  text-align: left;
+  border-top: 4px solid var(--secondary-color);
+}
+
+.reveal .card.accent {
+  border-top-color: var(--accent-color);
+}
+
+.reveal table {
+  margin: 0 auto;
+  border-collapse: collapse;
+  font-size: 0.6em;
+  width: 100%;
+  background: white;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.reveal th {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 12px 15px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.reveal td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: center;
+}
+
+.reveal tr:last-child td {
+  border-bottom: none;
+}
+
+.reveal tr:nth-child(even) {
+  background-color: #f1f5f9;
+}
+
+.reveal ul {
+  text-align: left;
+  display: block;
+  font-size: 0.8em;
+}
+
+.reveal li {
+  margin-bottom: 0.5em;
+}
+
+.caption {
+  font-size: 0.5em;
+  color: #64748b;
+  margin-top: 10px;
+  font-style: italic;
+}
+
+.highlight {
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+.comparison-box {
+  border: 2px dashed #cbd5e1;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #f8fafc;
+}
+
+.caveat-box {
+  background-color: #fffbeb;
+  border-left: 5px solid #fbbf24;
+  padding: 20px;
+  font-size: 0.75em;
+  text-align: left;
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
